@@ -4,25 +4,12 @@ import signal
 from time import sleep
 import uuid
 import threading
-import configparser
-from vncdesk.util import exit_on_error
-
-def read_settings():
-    global width, height, title
-
-    try:
-        config = configparser.ConfigParser()
-        config.read('settings.ini')
-        width = int(config['desktop']['width'])
-        height = int(config['desktop']['height'])
-        title = config['desktop']['title']
-    except:
-        exit_on_error("Cannot read settings or settings are corrupt")
+from vncdesk.util import exit_on_error, settings, read_settings
 
 def set_environ():
-    global _display, width, height
-    environ["WIDTH"] = str(width)
-    environ["HEIGHT"] = str(height)
+    global _display
+    environ["WIDTH"] = settings['desktop']['width']
+    environ["HEIGHT"] = settings['desktop']['height']
     environ["GUEST_DISPLAY"] = environ["DISPLAY"]
     environ["DISPLAY"] = _display
 
@@ -38,13 +25,15 @@ def wait_for_xvnc():
         sleep(0.1)
 
 def start_xvnc():
-    global _display, width, height, _number, port
+    global _display, _number, port
 
+    geometry = settings['desktop']['width'] + "x" + \
+               settings['desktop']['height']
     port = 5900 + _number
     cmd = " ".join(["Xvnc",
                     _display,
                     "-desktop xfig",
-                    "-geometry " + str(width) + "x" + str(height),
+                    "-geometry " + geometry,
                     "-rfbauth " + _password_filename,
                     "-rfbport " + str(port),
                     "-pn",

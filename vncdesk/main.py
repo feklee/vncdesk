@@ -6,12 +6,13 @@ from gi.repository import GtkVnc
 
 from vncdesk import vnc_server
 from sys import argv
-from vncdesk.util import exit_on_error
+from vncdesk.util import exit_on_error, settings
 
 def vnc_initialized(src, window):
     print("Connection initialized")
     window.show_all()
-    window.set_size_request(vnc_server.width, vnc_server.height)
+    window.set_size_request(int(settings['desktop']['width']),
+                            int(settings['desktop']['height']))
     window.set_resizable(False)
 
 def quit_all(widget = None):
@@ -42,7 +43,7 @@ def main():
 
     window.add(vnc)
     window.connect("destroy", quit_all)
-    window.set_title(vnc_server.title)
+    window.set_title(settings['window']['title'])
 
     vnc.realize()
     vnc.set_pointer_local(False)
