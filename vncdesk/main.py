@@ -10,9 +10,11 @@ from vncdesk.util import exit_on_error, settings
 
 def vnc_initialized(src, window):
     print("Connection initialized")
+    f = float(settings['window']['scale_factor'])
     window.show_all()
-    window.set_size_request(int(settings['desktop']['width']),
-                            int(settings['desktop']['height']))
+    print(f * int(settings['desktop']['width']))
+    window.set_size_request(round(f * int(settings['desktop']['width'])),
+                            round(f * int(settings['desktop']['height'])))
     window.set_resizable(False)
 
 def quit_all(widget = None):
@@ -49,6 +51,7 @@ def main():
     window.set_wmclass(settings['window']['name'], settings['window']['class'])
 
     vnc.realize()
+    vnc.set_scaling(True)
     vnc.set_pointer_local(False)
 
     vnc.set_credential(GtkVnc.DisplayCredential.PASSWORD, vnc_server.password)

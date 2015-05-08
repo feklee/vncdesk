@@ -22,5 +22,7 @@ def read_settings():
             settings['window']['name'] = 'vncdesk'
         if 'class' not in settings['window']:
             settings['window']['class'] = 'Vncdesk'
+        if 'scale_factor' not in settings['window']:
+            settings['window']['scale_factor'] = '1'
     except Exception as e:
         exit_on_error("Cannot read settings: " + str(e))

@@ -43,8 +43,13 @@ Files:
     name = myxfig
     title = xfig in vncdesk
     class = FigInVncdesk
+    scale_factor = 2
 
   The ``window`` section may be omitted.
+
+  Consider that GDK 3 will also scale the VNC viewer via the environment
+  variable ``GDK_SCALE``. You may want to disable GDK scaling in case you run
+  into display errors.
 
 * ``startup``: Startup script. Environment variables provided:
 
@@ -68,10 +73,6 @@ Files:
 
 * ``.password``: Generated every time anew, to password protect the connection
   also from other users on the same system.
-
-GDK 3 can scale the VNC viewer::
-
-  GDK_SCALE=2
 
 
 Releasing a new version
