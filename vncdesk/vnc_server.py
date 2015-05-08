@@ -4,7 +4,7 @@ import signal
 from time import sleep
 import uuid
 import threading
-from vncdesk.util import exit_on_error, settings, read_settings
+from .util import exit_on_error, settings, read_settings
 
 def set_environ():
     global _display

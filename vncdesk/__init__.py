@@ -1,1 +1,2 @@
-from vncdesk.main import main
+from .main import main
+from .version import __version__

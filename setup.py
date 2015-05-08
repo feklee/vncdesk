@@ -1,8 +1,9 @@
 from distutils.core import setup
+exec(open('vncdesk/version.py').read())
 
 setup(
     name = "vncdesk",
-    version = "1.0.0",
+    version = __version__,
     author = "Felix E. Klee",
     author_email = "felix.klee@inka.de",
     url = "https://github.com/feklee/vncdesk",

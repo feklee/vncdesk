@@ -4,9 +4,10 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GtkVnc
 
-from vncdesk import vnc_server
+from . import vnc_server
 from sys import argv
-from vncdesk.util import exit_on_error, settings
+from .util import exit_on_error, settings
+from .version import __version__
 
 def vnc_initialized(src, window):
     print("Connection initialized")
@@ -26,9 +27,11 @@ def vnc_disconnected(src):
     quit_all()
 
 def exit_with_usage():
+    url = "https://github.com/feklee/vncdesk/tree/v" + __version__
     exit_on_error("""\
 Usage: %s NUMBER
-Documentation: <https://github.com/feklee/vncdesk>""" % argv[0])
+Version: %s
+Documentation: <%s>""" % (argv[0], __version__, url))
 
 def read_cmd_line():
     if len(argv) != 2:

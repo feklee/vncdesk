@@ -82,6 +82,8 @@ Releasing a new version
 
 * Use versioning scheme: `major.minor.patch`_
 
+* Set version in: ``vncdesk/version.py``
+
 * Tag version in Git.
 
 
