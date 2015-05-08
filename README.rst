@@ -38,6 +38,7 @@ Files:
     [desktop]
     width = 1024
     height = 768
+    name = Xfig
 
 * ``startup``: Startup script. Environment variables provided:
 

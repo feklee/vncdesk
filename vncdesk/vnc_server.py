@@ -8,13 +8,14 @@ import configparser
 from vncdesk.util import exit_on_error
 
 def read_settings():
-    global width, height
+    global width, height, title
 
     try:
         config = configparser.ConfigParser()
         config.read('settings.ini')
         width = int(config['desktop']['width'])
         height = int(config['desktop']['height'])
+        title = config['desktop']['title']
     except:
         exit_on_error("Cannot read settings or settings are corrupt")
 
