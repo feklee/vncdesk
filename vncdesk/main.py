@@ -46,6 +46,7 @@ def main():
     window.add(vnc)
     window.connect("destroy", quit_all)
     window.set_title(settings['window']['title'])
+    window.set_wmclass(settings['window']['name'], settings['window']['class'])
 
     vnc.realize()
     vnc.set_pointer_local(False)

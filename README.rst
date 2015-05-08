@@ -38,7 +38,13 @@ Files:
     [desktop]
     width = 1024
     height = 768
-    name = Xfig
+
+    [window]
+    name = myxfig
+    title = xfig in vncdesk
+    class = FigInVncdesk
+
+  The ``window`` section may be omitted.
 
 * ``startup``: Startup script. Environment variables provided:
 

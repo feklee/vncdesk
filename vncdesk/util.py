@@ -14,5 +14,13 @@ def read_settings():
         new_settings.read('settings.ini')
         for k, v in new_settings.items():
             settings[k] = v
+        if 'window' not in settings:
+            settings['window'] = {}
+        if 'title' not in settings['window']:
+            settings['window']['title'] = 'Vncdesk'
+        if 'name' not in settings['window']:
+            settings['window']['name'] = 'vncdesk'
+        if 'class' not in settings['window']:
+            settings['window']['class'] = 'Vncdesk'
     except Exception as e:
         exit_on_error("Cannot read settings: " + str(e))
