@@ -24,7 +24,9 @@ def vnc_disconnected(src):
     quit_all()
 
 def exit_with_usage():
-    exit_on_error("Usage: " + argv[0] + " NUMBER")
+    exit_on_error("""\
+Usage: %s NUMBER
+Documentation: <https://github.com/feklee/vncdesk>""" % argv[0])
 
 def read_cmd_line():
     if len(argv) != 2:

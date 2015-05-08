@@ -22,8 +22,8 @@ Run with sufficient permissions::
   python setup.py install
 
 
-Usage
-=====
+Configuration
+=============
 
 Configuration for each desktop goes into a numbered directory below
 ``~/.vncdesk``. For example the configuration in ``~/.vncdesk/2/`` can be run
