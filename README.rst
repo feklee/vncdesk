@@ -13,11 +13,11 @@ Installation
 
 2. Install dependencies:
 
-  - Python 3
+   - Python 3
 
-  - TigerVNC_ 1.4 or a compatible VNC server
+   - TigerVNC_ 1.4 or a compatible VNC server
 
-  - gtk-vnc_ 0.5 or compatible
+   - gtk-vnc_ 0.5 or compatible
 
 3. Run with sufficient permissions::
 
