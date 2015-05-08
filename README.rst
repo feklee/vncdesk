@@ -9,17 +9,19 @@ screens. Applications run in VNC desktops.
 Installation
 ============
 
-Install dependencies:
+1. Download one of the releases_ from GitHub.
 
-* Python 3
+2. Install dependencies:
 
-* TigerVNC_ 1.4 or a compatible VNC server
+  - Python 3
 
-* gtk-vnc_ 0.5 or compatible
+  - TigerVNC_ 1.4 or a compatible VNC server
 
-Run with sufficient permissions::
+  - gtk-vnc_ 0.5 or compatible
 
-  python setup.py install
+3. Run with sufficient permissions::
+
+     python setup.py install
 
 
 Configuration
@@ -103,6 +105,7 @@ the Do What The Fuck You Want To Public License, Version 2, as published by Sam
 Hocevar. See the COPYING file for more details.
 
 
+.. _releases: https://github.com/feklee/vncdesk/releases
 .. _TigerVNC: http://tigervnc.org/
 .. _major.minor.patch: http://semver.org/
 .. _gtk-vnc: https://wiki.gnome.org/Projects/gtk-vnc
