@@ -61,11 +61,13 @@ Files:
 
   - ``GUEST_DISPLAY``: Display of the VNC client.
 
+  - Arguments passed when calling ``vncdesk``.
+
   Example::
 
     #!/bin/sh
     xrdb -merge Xresources
-    exec xfig -geometry ${WIDTH}x$HEIGHT+0+0
+    exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 
 * Application specific files, for example ``Xresources``::
 

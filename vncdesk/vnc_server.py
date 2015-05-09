@@ -4,6 +4,7 @@ import signal
 from time import sleep
 import uuid
 import threading
+from shlex import quote
 from .util import exit_on_error, settings, read_settings
 
 def set_environ():
@@ -64,17 +65,18 @@ def check_startup(filename):
     if not path.isfile(filename) or not access(filename, X_OK):
         exit_on_error("Cannot find executable startup script")
 
-def startup(filename):
+def startup(cmd):
     set_environ()
-    check_startup(filename)
-    system(filename)
+    system(cmd)
     terminate()
     quit()
 
-def run_startup():
+def run_startup(arguments):
+    quoted_arguments = list(map(quote, arguments))
     filename = "./startup"
     check_startup(filename)
-    t1 = threading.Thread(target = startup, args=(filename,))
+    cmd = filename + " " + " ".join(quoted_arguments)
+    t1 = threading.Thread(target = startup, args=(cmd,))
     t1.start()
 
 def configure_xvnc():
@@ -89,7 +91,7 @@ def change_to_configuration_dir():
     except:
         exit_on_error("Cannot access directory " + dirname)
 
-def start(number):
+def start(number, arguments):
     global _number, _display, _xvnc_lock_filename
 
     _number = number
@@ -101,4 +103,4 @@ def start(number):
     create_password()
     start_xvnc()
     configure_xvnc()
-    run_startup()
+    run_startup(arguments)

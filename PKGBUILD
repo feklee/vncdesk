@@ -2,7 +2,7 @@
 
 _gitname=vncdesk
 pkgname="$_gitname"-git
-pkgver=1.0.1.r1.gcd02514
+pkgver=1.1.0.r0.ga0b4396
 pkgrel=1
 pkgdesc="Runs applications via VNC. Useful for scaling on high DPI (HiDPI) screens."
 arch=('any')

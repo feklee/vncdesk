@@ -29,21 +29,22 @@ def vnc_disconnected(src):
 def exit_with_usage():
     url = "https://github.com/feklee/vncdesk/tree/v" + __version__
     exit_on_error("""\
-Usage: %s NUMBER
+Usage: %s NUMBER [ARGUMENT]...
 Version: %s
 Documentation: <%s>""" % (argv[0], __version__, url))
 
 def read_cmd_line():
-    if len(argv) != 2:
+    if len(argv) < 2:
         exit_with_usage()
 
     try:
-        return int(argv[1])
+        return (int(argv[1]), argv[2:])
     except ValueError:
         exit_with_usage()
 
 def main():
-    vnc_server.start(read_cmd_line())
+    number, arguments = read_cmd_line()
+    vnc_server.start(number, arguments)
 
     window = Gtk.Window()
     vnc = GtkVnc.Display()
