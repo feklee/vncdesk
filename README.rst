@@ -45,11 +45,14 @@ Files:
 
   - ``GUEST_DISPLAY``: Display of the VNC client.
 
+  - ``INVOCATION_DIR``: Directory in which ``vncdesk`` was started.
+
   - Arguments passed when calling ``vncdesk``.
 
   Example::
 
     #!/bin/sh
+    cd "$INVOCATION_DIR"
     xrdb -merge Xresources
     exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 

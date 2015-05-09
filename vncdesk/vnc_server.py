@@ -1,4 +1,4 @@
-from os import path, environ, kill, system, chdir, access, X_OK
+from os import path, environ, kill, system, chdir, access, X_OK, getcwd
 import string
 import signal
 from time import sleep
@@ -7,12 +7,13 @@ import threading
 from shlex import quote
 from .util import exit_on_error, settings, read_settings
 
-def set_environ():
+def set_environ(invocation_dir):
     global _display
     environ["WIDTH"] = settings['desktop']['width']
     environ["HEIGHT"] = settings['desktop']['height']
     environ["GUEST_DISPLAY"] = environ["DISPLAY"]
     environ["DISPLAY"] = _display
+    environ["INVOCATION_DIR"] = invocation_dir
 
 def terminate():
     global _xvnc_lock_filename
@@ -65,18 +66,20 @@ def check_startup(filename):
     if not path.isfile(filename) or not access(filename, X_OK):
         exit_on_error("Cannot find executable startup script")
 
-def startup(cmd):
-    set_environ()
+def startup(filename, arguments, invocation_dir):
+    set_environ(invocation_dir)
+    quoted_arguments = list(map(quote, arguments))
+    cmd = filename + " " + " ".join(quoted_arguments)
     system(cmd)
     terminate()
     quit()
 
-def run_startup(arguments):
-    quoted_arguments = list(map(quote, arguments))
+def run_startup(arguments, invocation_dir):
     filename = "./startup"
     check_startup(filename)
-    cmd = filename + " " + " ".join(quoted_arguments)
-    t1 = threading.Thread(target = startup, args=(cmd,))
+    t1 = threading.Thread(target = startup, args = [filename,
+                                                    arguments,
+                                                    invocation_dir])
     t1.start()
 
 def configure_xvnc():
@@ -98,9 +101,10 @@ def start(number, arguments):
     _display = ':' + str(_number)
     _xvnc_lock_filename = "/tmp/.X" + str(_number) + "-lock"
 
+    invocation_dir = getcwd()
     change_to_configuration_dir()
     read_settings()
     create_password()
     start_xvnc()
     configure_xvnc()
-    run_startup(arguments)
+    run_startup(arguments, invocation_dir)
