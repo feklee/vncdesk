@@ -42,8 +42,8 @@ Files:
     height = 768
 
     [window]
-    name = myxfig
-    title = xfig in vncdesk
+    title = Xfig
+    name = xfig in vncdesk
     class = FigInVncdesk
     scale_factor = 2
 
