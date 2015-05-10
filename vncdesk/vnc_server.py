@@ -30,7 +30,7 @@ def font_path():
     try:
         from .font_path import font_path
         return font_path
-    except:
+    except ImportError:
         return None
 
 def xvnc_cmd():
