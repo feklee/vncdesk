@@ -99,7 +99,7 @@ def run_startup(arguments, invocation_dir):
 def configure_xvnc():
     global _number
     system("vncconfig -list >/dev/null 2>&1" +
-           " && vncconfig -nowin -display=:" + str(_number) + " &" +
+           " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
            " || echo 'vncconfig not available'")
 
 def change_to_configuration_dir():
