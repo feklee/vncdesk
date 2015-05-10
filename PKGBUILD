@@ -27,6 +27,12 @@ build() {
 
 package() {
 	cd "$srcdir/$_gitname"
+    cat << EOF >vncdesk/font_path.py
+font_path = ','.join(['/usr/share/fonts/misc/',
+                      '/usr/share/fonts/75dpi/',
+                      '/usr/share/fonts/100dpi/',
+                      '/usr/share/fonts/Type1/'])
+EOF
     python setup.py install --root="${pkgdir}"
     install -D -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
 }

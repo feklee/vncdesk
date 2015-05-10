@@ -77,15 +77,15 @@ Installation
 
    - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
 
-   - gtk-vnc_ 0.5 or compatible
+   - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
 
 3. If you want to set up an explicit font path for the VNC server, at the same
    level as ``__init__.py`` create ``font_path.py``. Example contents::
 
-     font_path = ','.join('/usr/share/fonts/misc/',
-                          '/usr/share/fonts/75dpi/',
-                          '/usr/share/fonts/100dpi/',
-                          '/usr/share/fonts/Type1/')
+     font_path = ','.join(['/usr/share/fonts/misc/',
+                           '/usr/share/fonts/75dpi/',
+                           '/usr/share/fonts/100dpi/',
+                           '/usr/share/fonts/Type1/'])
 
 4. Run with sufficient permissions::
 
