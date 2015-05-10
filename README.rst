@@ -52,8 +52,8 @@ Files:
   Example::
 
     #!/bin/sh
-    cd "$INVOCATION_DIR"
     xrdb -merge Xresources
+    cd "$INVOCATION_DIR"
     exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 
 * Application specific files, for example ``Xresources``::
