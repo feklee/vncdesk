@@ -1,4 +1,5 @@
-from distutils.core import setup
+from setuptools import setup
+
 exec(open('vncdesk/version.py').read())
 
 setup(
@@ -11,5 +12,6 @@ setup(
     scripts = ["bin/vncdesk"],
     license = "WTFPL",
     description = "Runs applications via VNC. Allows scaling applications.",
-    long_description = open('README.rst').read()
+    long_description = open('README.rst').read(),
+    zip_safe = True
 )

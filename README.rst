@@ -15,7 +15,7 @@ with::
 
   vncdesk 2 drawing.fig
 
-The optional argument ``drawing.fig`` is passed to the startup script.
+Optional arguments, here ``drawing.fig``, are passed to the startup script.
 
 Files:
 
@@ -75,11 +75,19 @@ Installation
 
    - Python 3
 
-   - TigerVNC_ 1.4 or a compatible VNC server
+   - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_
 
    - gtk-vnc_ 0.5 or compatible
 
-3. Run with sufficient permissions::
+3. If you want to set up an explicit font path for the VNC server, at the same
+   level as ``__init__.py`` create ``font_path.py``. Example contents::
+
+     font_path = ','.join('/usr/share/fonts/misc/',
+                          '/usr/share/fonts/75dpi/',
+                          '/usr/share/fonts/100dpi/',
+                          '/usr/share/fonts/Type1/')
+
+4. Run with sufficient permissions::
 
      python setup.py install
 

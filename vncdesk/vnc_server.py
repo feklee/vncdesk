@@ -26,22 +26,36 @@ def wait_for_xvnc():
     while not path.isfile(_xvnc_lock_filename):
         sleep(0.1)
 
-def start_xvnc():
+def font_path():
+    try:
+        from .font_path import font_path
+        return font_path
+    except:
+        return None
+
+def xvnc_cmd():
     global _display, _number, port
 
     geometry = settings['desktop']['width'] + "x" + \
                settings['desktop']['height']
     port = 5900 + _number
-    cmd = " ".join(["Xvnc",
-                    _display,
-                    "-desktop xfig",
-                    "-geometry " + geometry,
-                    "-rfbauth " + _password_filename,
-                    "-rfbport " + str(port),
-                    "-pn",
-                    "&"])
+    fp = font_path()
+    a = ["Xvnc",
+         _display,
+         "-desktop xfig",
+         "-geometry " + geometry,
+         "-rfbauth " + _password_filename,
+         "-rfbport " + str(port),
+         "-pn"]
+    if fp:
+        a.append("-fp " + fp)
+    a.append("&")
+
+    return " ".join(a)
+
+def start_xvnc():
     terminate()
-    system(cmd)
+    system(xvnc_cmd())
     wait_for_xvnc()
 
 def write_password_to_file():
