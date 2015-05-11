@@ -13,9 +13,16 @@ Configuration for each desktop goes into a numbered directory below
 ``~/.vncdesk``. For example the configuration in ``~/.vncdesk/2/`` can be run
 with::
 
-  vncdesk 2 drawing.fig
+  vncdesk 2 nikke.fig
 
-Optional arguments, here ``drawing.fig``, are passed to the startup script.
+Optional arguments, here ``nikke.fig``, are passed to the startup script which
+may pass it on to an application:
+
+.. image:: screenshot.png
+   :height: 2304px
+   :width: 1152px
+   :alt: Screenshot
+   :target: screenshot.png
 
 Files:
 
