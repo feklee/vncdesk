@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import gi
+gi.require_version('Gtk', '2.0')
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GtkVnc
