@@ -16,7 +16,6 @@ def vnc_initialized(src, window):
     print("Connection initialized")
     f = float(settings['window']['scale_factor'])
     window.show_all()
-    print(f * int(settings['desktop']['width']))
     window.set_size_request(round(f * int(settings['desktop']['width'])),
                             round(f * int(settings['desktop']['height'])))
     window.set_resizable(False)
