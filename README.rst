@@ -69,7 +69,7 @@ Files:
     exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 
   You can also run window managers in your vnc desktop. Example ``startup``
-  script:
+  script::
 
     #!/bin/sh
     cd "$INVOCATION_DIR"
@@ -98,7 +98,7 @@ Installation
    - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
 
    - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
-        - package gtk-vnc for debian-based linux (you may need also
+        package gtk-vnc for debian-based linux (you may need also
         libgtk-vnc-2.0-dev, libgtk-vnc-2.0-0, libgtk-vnc-2.0-0-dbg)
 
 3. If you want to set up an explicit font path for the VNC server, at the same
@@ -113,10 +113,11 @@ Installation
 
      python setup.py install
 
-   Or, if you have pip:
+   Or, if you have pip::
 
      cd ~/vncdesk-download-folder
      pip3 install .
+
    But remember to add ~/.local/bin to your path or you won't be able to find
    the "vncdesk" command
 
