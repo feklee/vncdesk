@@ -31,6 +31,7 @@ Files:
     [desktop]
     width = 1024
     height = 768
+    depth = 15
 
     [window]
     title = Xfig
@@ -38,7 +39,11 @@ Files:
     class = FigInVncdesk
     scale_factor = 2
 
-  The ``window`` section may be omitted.
+    [other]
+    localhost = true
+
+  The ``window`` and ``other`` sections may be omitted. The meanings of the
+  configuration parameters are the same you would use with a standard vncserver.
 
   Consider that GDK 3 will also scale the VNC viewer via the environment
   variable ``GDK_SCALE``. You may want to disable GDK scaling in case you run
@@ -63,6 +68,14 @@ Files:
     cd "$INVOCATION_DIR"
     exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 
+  You can also run window managers in your vnc desktop. Example ``startup``
+  script::
+
+    #!/bin/sh
+    cd "$INVOCATION_DIR"
+    exec fluxbox &
+    xterm -e command
+
 * Application specific files, for example ``Xresources``::
 
     xfig*image_editor: DISPLAY=$GUEST_DISPLAY xdg-open
@@ -85,6 +98,8 @@ Installation
    - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
 
    - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
+        package gtk-vnc for debian-based linux (you may need also
+        libgtk-vnc-2.0-dev, libgtk-vnc-2.0-0, libgtk-vnc-2.0-0-dbg)
 
 3. If you want to set up an explicit font path for the VNC server, at the same
    level as ``__init__.py`` create ``font_path.py``. Example contents::
@@ -97,6 +112,14 @@ Installation
 4. Run with sufficient permissions::
 
      python setup.py install
+
+   Or, if you have pip::
+
+     cd ~/vncdesk-download-folder
+     pip3 install .
+
+   But remember to add ~/.local/bin to your path or you won't be able to find
+   the "vncdesk" command
 
 
 Releasing a new version
