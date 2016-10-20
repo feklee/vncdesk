@@ -16,6 +16,8 @@ def read_settings():
             settings[k] = v
         if 'window' not in settings:
             settings['window'] = {}
+        if 'other' not in settings:
+            settings['other'] = {}
         if 'title' not in settings['window']:
             settings['window']['title'] = 'Vncdesk'
         if 'name' not in settings['window']:
@@ -24,5 +26,9 @@ def read_settings():
             settings['window']['class'] = 'Vncdesk'
         if 'scale_factor' not in settings['window']:
             settings['window']['scale_factor'] = '1'
+        if 'depth' not in settings['desktop']:
+            settings['desktop']['depth'] = 16
+        if 'localhost' not in settings['other']:
+            settings['other']['localhost'] = False
     except Exception as e:
         exit_on_error("Cannot read settings: " + str(e))
