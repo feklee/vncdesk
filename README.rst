@@ -43,7 +43,8 @@ Files:
     localhost = true
 
   The ``window`` and ``other`` sections may be omitted. The meanings of the
-  configuration parameters are the same you would use with a standard vncserver.
+  configuration parameters are the same you would use with a standard
+  vncserver.
 
   Consider that GDK 3 will also scale the VNC viewer via the environment
   variable ``GDK_SCALE``. You may want to disable GDK scaling in case you run
@@ -61,20 +62,21 @@ Files:
 
   - Arguments passed when calling ``vncdesk``.
 
-  Example::
+  Examples:
 
-    #!/bin/sh
-    xrdb -merge Xresources
-    cd "$INVOCATION_DIR"
-    exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
+  - Xfig_ in full screen mode::
 
-  You can also run window managers in your vnc desktop. Example ``startup``
-  script::
+      #!/bin/sh
+      xrdb -merge Xresources
+      cd "$INVOCATION_DIR"
+      exec xfig -geometry ${WIDTH}x$HEIGHT+0+0 "$@"
 
-    #!/bin/sh
-    cd "$INVOCATION_DIR"
-    exec fluxbox &
-    xterm -e command
+  - Xfig in Fluxbox_ window manager::
+
+      #!/bin/sh
+      cd "$INVOCATION_DIR"
+      exec fluxbox &
+      xterm -e command
 
 * Application specific files, for example ``Xresources``::
 
@@ -98,8 +100,6 @@ Installation
    - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
 
    - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
-        package gtk-vnc for debian-based linux (you may need also
-        libgtk-vnc-2.0-dev, libgtk-vnc-2.0-0, libgtk-vnc-2.0-0-dbg)
 
 3. If you want to set up an explicit font path for the VNC server, at the same
    level as ``__init__.py`` create ``font_path.py``. Example contents::
@@ -113,13 +113,13 @@ Installation
 
      python setup.py install
 
-   Or, if you have pip::
+   Or, if you have pip_:
 
-     cd ~/vncdesk-download-folder
-     pip3 install .
+    a. Run::
 
-   But remember to add ~/.local/bin to your path or you won't be able to find
-   the "vncdesk" command
+       pip3 install .
+
+    b. Remember to add ``~/.local/bin`` to your path.
 
 
 Releasing a new version
@@ -145,7 +145,8 @@ License
 
 Except where noted otherwise, files are licensed under the WTFPL.
 
-Copyright © 2015 `Felix E. Klee <mailto:felix.klee@inka.de>`_
+Copyright © 2015, 2016 `Felix E. Klee <mailto:felix.klee@inka.de>`_, with
+contributions by `Giorgio <https://github.com/gbyolo>`_
 
 This work is free. You can redistribute it and/or modify it under the terms of
 the Do What The Fuck You Want To Public License, Version 2, as published by Sam
@@ -154,5 +155,9 @@ Hocevar. See the COPYING file for more details.
 
 .. _release: https://github.com/feklee/vncdesk/releases
 .. _TigerVNC: http://tigervnc.org/
+.. _TightVNC: https://en.wikipedia.org/wiki/TightVNC
 .. _major.minor.patch: http://semver.org/
 .. _gtk-vnc: https://wiki.gnome.org/Projects/gtk-vnc
+.. _Xfig: https://en.wikipedia.org/wiki/Xfig
+.. _Fluxbox: https://en.wikipedia.org/wiki/Fluxbox
+.. _pip: https://en.wikipedia.org/wiki/Pip_(package_manager)
