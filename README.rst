@@ -31,7 +31,7 @@ Files:
     [desktop]
     width = 1024
     height = 768
-    depth = 15
+    depth = 24
 
     [window]
     title = Xfig
@@ -39,12 +39,7 @@ Files:
     class = FigInVncdesk
     scale_factor = 2
 
-    [other]
-    localhost = true
-
-  The ``window`` and ``other`` sections may be omitted. The meanings of the
-  configuration parameters are the same you would use with a standard
-  vncserver.
+  The option ``depth`` is optional, and so is the entire section ``window``.
 
   Consider that GDK 3 will also scale the VNC viewer via the environment
   variable ``GDK_SCALE``. You may want to disable GDK scaling in case you run
@@ -113,13 +108,9 @@ Installation
 
      python setup.py install
 
-   Or, if you have pip_:
+   Or, if you have pip_::
 
-    a. Run::
-
-       pip3 install .
-
-    b. Remember to add ``~/.local/bin`` to your path.
+     pip3 install .
 
 
 Releasing a new version
@@ -146,7 +137,8 @@ License
 Except where noted otherwise, files are licensed under the WTFPL.
 
 Copyright © 2015, 2016 `Felix E. Klee <mailto:felix.klee@inka.de>`_, with
-contributions by `Giorgio <https://github.com/gbyolo>`_
+contributions by `Robin Green <mailto:greenrd@greenrd.org>`_, and `Giorgio
+<https://github.com/gbyolo>`_
 
 This work is free. You can redistribute it and/or modify it under the terms of
 the Do What The Fuck You Want To Public License, Version 2, as published by Sam

@@ -1,9 +1,10 @@
-from os import path, environ, kill, system, chdir, access, X_OK, getcwd
+from os import path, environ, kill, system, chdir, access, X_OK, getcwd, remove
 import string
 import signal
 from time import sleep
 import uuid
 import threading
+from sys import exit
 from shlex import quote
 from .util import exit_on_error, settings, read_settings
 
@@ -15,26 +16,21 @@ def set_environ(invocation_dir):
     environ["DISPLAY"] = _display
     environ["INVOCATION_DIR"] = invocation_dir
 
+def remove_lock_file():
+    try:
+        remove(_xvnc_lock_filename)
+    except:
+        exit("Could not remove lock file " + _xvnc_lock_filename)
+
 def terminate():
     global _xvnc_lock_filename
 
     if path.isfile(_xvnc_lock_filename):
         pid = int(open(_xvnc_lock_filename, 'r').read())
-        print(_xvnc_lock_filename)
         try:
             kill(pid, signal.SIGTERM)
-        except Exception as ex:
-            print("Couldn't kill xvnc process, trying to delete its lock file...\n")
-            try:
-                os.remove(_xvnc_lock_filename)
-            except OSError as e:
-                print("Couldn't even find xvnc lock files. Aborting...")
-                exit(-1)
-            else:
-                print("Xvnc terminated\n")
-        else:
-            print("Xvnc terminated\n")
-
+        except:
+            remove_lock_file()
 
 def wait_for_xvnc():
     while not path.isfile(_xvnc_lock_filename):
@@ -47,28 +43,22 @@ def font_path():
     except ImportError:
         return None
 
-def str2bool(v):
-  return v.strip().lower() in ("yes", "true", "t", "1")
-
 def xvnc_cmd():
     global _display, _number, port
 
     geometry = settings['desktop']['width'] + "x" + \
                settings['desktop']['height']
     depth = settings['desktop']['depth']
-    localhost = str2bool(settings['other']['localhost'])
     port = 5900 + _number
     fp = font_path()
-    #"-desktop xfig",
     a = ["Xvnc",
          _display,
          "-geometry " + geometry,
          "-rfbauth " + _password_filename,
          "-rfbport " + str(port),
          "-depth " + depth,
-         "-pn"]
-    if localhost:
-        a.append("-localhost ")
+         "-pn",
+         "-localhost"]
     if fp:
         a.append("-fp " + fp)
     a.append("&")
@@ -78,7 +68,7 @@ def xvnc_cmd():
 def start_xvnc():
     terminate()
     cmd = xvnc_cmd()
-    print("CMD: "+cmd)
+    print("Xvnc command line: " + cmd)
     system(cmd)
     wait_for_xvnc()
 

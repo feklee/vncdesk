@@ -27,8 +27,6 @@ def read_settings():
         if 'scale_factor' not in settings['window']:
             settings['window']['scale_factor'] = '1'
         if 'depth' not in settings['desktop']:
-            settings['desktop']['depth'] = 16
-        if 'localhost' not in settings['other']:
-            settings['other']['localhost'] = False
+            settings['desktop']['depth'] = '16'
     except Exception as e:
         exit_on_error("Cannot read settings: " + str(e))
