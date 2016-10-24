@@ -13,7 +13,7 @@ Configuration for each desktop goes into a numbered directory below
 ``~/.vncdesk``. For example the configuration in ``~/.vncdesk/2/`` can be run
 with::
 
-  vncdesk 2 nikke.fig
+  vncdesk 2 Examples/nikke.fig
 
 Optional arguments, here ``nikke.fig``, are passed to the startup script which
 may pass it on to an application:
