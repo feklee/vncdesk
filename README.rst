@@ -116,6 +116,10 @@ Installation
 Releasing a new version
 =======================
 
+* Test, e.g. by::
+
+    pip3 upgrade --user .; ~/.local/bin/vncdesk 2
+
 * Use versioning scheme: `major.minor.patch`_
 
 * Set version in: ``vncdesk/version.py``
