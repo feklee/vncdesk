@@ -46,6 +46,10 @@ Files:
   variable ``GDK_SCALE``. You may want to disable GDK scaling in case you run
   into display errors.
 
+  Set ``smoothing`` to ``false`` to get rid of blur when scaling. This option
+  does not work with gtk-vnc release 0.6.0. It requires a gtk-vnc development
+  version, or a newer release.
+
 * ``startup``: Startup script. Environment variables provided:
 
   - ``WIDTH``, ``HEIGHT``: Desktop size.
