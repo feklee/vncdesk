@@ -10,8 +10,8 @@ from .util import exit_on_error, settings, read_settings
 
 def set_environ(invocation_dir):
     global _display
-    environ["WIDTH"] = settings['desktop']['width']
-    environ["HEIGHT"] = settings['desktop']['height']
+    environ["WIDTH"] = str(settings['desktop']['width'])
+    environ["HEIGHT"] = str(settings['desktop']['height'])
     environ["GUEST_DISPLAY"] = environ["DISPLAY"]
     environ["DISPLAY"] = _display
     environ["INVOCATION_DIR"] = invocation_dir
@@ -46,9 +46,9 @@ def font_path():
 def xvnc_cmd():
     global _display, _number, port
 
-    geometry = settings['desktop']['width'] + "x" + \
-               settings['desktop']['height']
-    depth = settings['desktop']['depth']
+    geometry = str(settings['desktop']['width']) + "x" + \
+               str(settings['desktop']['height'])
+    depth = str(settings['desktop']['depth'])
     port = 5900 + _number
     fp = font_path()
     a = ["Xvnc",

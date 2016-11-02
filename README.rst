@@ -38,6 +38,7 @@ Files:
     name = xfig in vncdesk
     class = FigInVncdesk
     scale_factor = 2
+    smoothing = false
 
   The option ``depth`` is optional, and so is the entire section ``window``.
 
@@ -118,7 +119,7 @@ Releasing a new version
 
 * Test, e.g. by::
 
-    pip3 upgrade --user .; ~/.local/bin/vncdesk 2
+    pip3 install --upgrade --user .; ~/.local/bin/vncdesk 2
 
 * Use versioning scheme: `major.minor.patch`_
 

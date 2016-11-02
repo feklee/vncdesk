@@ -14,10 +14,10 @@ from .version import __version__
 
 def vnc_initialized(src, window):
     print("Connection initialized")
-    f = float(settings['window']['scale_factor'])
+    f = settings['window']['scale_factor']
     window.show_all()
-    window.set_size_request(round(f * int(settings['desktop']['width'])),
-                            round(f * int(settings['desktop']['height'])))
+    window.set_size_request(round(f * settings['desktop']['width']),
+                            round(f * settings['desktop']['height']))
     window.set_resizable(False)
 
 def quit_all(widget = None):
@@ -44,6 +44,9 @@ def read_cmd_line():
     except ValueError:
         exit_with_usage()
 
+def gtk_vnc_allows_configuring_smoothing(vnc):
+    return 'set_smoothing' in dir(vnc)
+
 def main():
     number, arguments = read_cmd_line()
     vnc_server.start(number, arguments)
@@ -59,6 +62,9 @@ def main():
     vnc.realize()
     vnc.set_scaling(True)
     vnc.set_pointer_local(False)
+
+    if gtk_vnc_allows_configuring_smoothing(vnc):
+        vnc.set_smoothing(settings['window']['smoothing'])
 
     vnc.set_credential(GtkVnc.DisplayCredential.PASSWORD, vnc_server.password)
 
