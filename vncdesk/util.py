@@ -3,7 +3,6 @@ import configparser
 from copy import deepcopy
 
 settings = {}
-fixme = {}
 
 def exit_on_error(msg):
     stderr.write(msg + "\n")

@@ -9,6 +9,7 @@ from gi.repository import GtkVnc
 
 from . import vnc_server
 from sys import argv
+from os import environ
 from .util import exit_on_error, settings
 from .version import __version__
 
@@ -35,6 +36,12 @@ Usage: %s NUMBER [ARGUMENT]...
 Version: %s
 Documentation: <%s>""" % (argv[0], __version__, url))
 
+def ensure_display():
+    if not "DISPLAY" in environ:
+        exit_on_error("DISPLAY not set");
+        # if DISPLAY is not set, then - as of December 2016 - the VNC client may
+        # segfault
+
 def read_cmd_line():
     if len(argv) < 2:
         exit_with_usage()
@@ -49,6 +56,9 @@ def gtk_vnc_allows_configuring_smoothing(vnc):
 
 def main():
     number, arguments = read_cmd_line()
+
+    ensure_display()
+
     vnc_server.start(number, arguments)
 
     window = Gtk.Window()
