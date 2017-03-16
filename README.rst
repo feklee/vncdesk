@@ -97,7 +97,7 @@ Installation
 
    - Python 3
 
-   - A compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
+   - a compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
 
    - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
 
@@ -145,7 +145,7 @@ License
 
 Except where noted otherwise, files are licensed under the WTFPL.
 
-Copyright © 2015, 2016 `Felix E. Klee <mailto:felix.klee@inka.de>`_, with
+Copyright © 2015–2017 `Felix E. Klee <mailto:felix.klee@inka.de>`_, with
 contributions by `Robin Green <mailto:greenrd@greenrd.org>`_, and `Giorgio
 <https://github.com/gbyolo>`_
 
