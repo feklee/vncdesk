@@ -114,7 +114,7 @@ def configure_xvnc():
     global _number
     system("vncconfig -display=:" + str(_number) + " -list >/dev/null 2>&1" +
            " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
-           " || echo 'vncconfig not available'")
+           " || echo 'Failure running vncconfig'")
 
 def change_to_configuration_dir():
     global _number
