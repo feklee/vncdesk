@@ -47,8 +47,7 @@ Files:
   into display errors.
 
   Set ``smoothing`` to ``false`` to get rid of blur when scaling. This option
-  does not work with gtk-vnc release 0.6.0. It requires a gtk-vnc development
-  version, or a newer release.
+  requires gtk-vnc release 0.7.0 or newer.
 
 * ``startup``: Startup script, executable by the user.
 
