@@ -50,7 +50,9 @@ Files:
   does not work with gtk-vnc release 0.6.0. It requires a gtk-vnc development
   version, or a newer release.
 
-* ``startup``: Startup script. Environment variables provided:
+* ``startup``: Startup script, executable by the user.
+
+  Environment variables provided:
 
   - ``WIDTH``, ``HEIGHT``: Desktop size.
 
