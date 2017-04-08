@@ -101,7 +101,7 @@ Installation
    - Python_3
 
    - a compatible VNC server such as TigerVNC_ 1.4, TightVNC_ 1.3, or
-     RealVNC_ 6.0
+     RealVNC_ 4.1
 
    - gtk-vnc_ 0.5 or compatible, with Python GTK+ 3 bindings
 
