@@ -154,6 +154,7 @@ This work is free. You can redistribute it and/or modify it under the terms of
 the Do What The Fuck You Want To Public License, Version 2, as published by Sam
 Hocevar. See the COPYING file for more details.
 
+`d3des.py` has been taken from Yusuke Shinyama’s vnc2flv_ version 20100207.
 
 .. _release: https://github.com/feklee/vncdesk/releases
 .. _TigerVNC: http://tigervnc.org/
@@ -163,3 +164,4 @@ Hocevar. See the COPYING file for more details.
 .. _Xfig: https://en.wikipedia.org/wiki/Xfig
 .. _Fluxbox: https://en.wikipedia.org/wiki/Fluxbox
 .. _pip: https://en.wikipedia.org/wiki/Pip_(package_manager)
+.. _vnc2flv: http://pydoc.net/Python/vnc2flv/20100207/vnc2flv.d3des/
