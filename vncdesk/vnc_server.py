@@ -9,13 +9,14 @@ from shlex import quote
 from .util import exit_on_error, settings, read_settings
 from . import d3des
 
-def set_environ(invocation_dir):
+def set_environ(invocation_dir, xauthority_path):
     global _display
     environ["WIDTH"] = str(settings['desktop']['width'])
     environ["HEIGHT"] = str(settings['desktop']['height'])
     environ["GUEST_DISPLAY"] = environ["DISPLAY"]
     environ["DISPLAY"] = _display
     environ["INVOCATION_DIR"] = invocation_dir
+    environ["XAUTHORITY"] = xauthority_path
 
 def remove_lock_file():
     try:
@@ -44,7 +45,7 @@ def font_path():
     except ImportError:
         return None
 
-def xvnc_cmd():
+def xvnc_cmd(xauthority_path):
     global _display, _number, port
 
     geometry = str(settings['desktop']['width']) + "x" + \
@@ -58,17 +59,19 @@ def xvnc_cmd():
          "-rfbauth " + _password_filename,
          "-rfbport " + str(port),
          "-depth " + depth,
+         "-sp .", # dummy Xserver option to avoid RealVNC error message
          "-pn",
-         "-localhost"]
+         "-localhost",
+         "-auth " + xauthority_path]
     if fp:
         a.append("-fp " + fp)
     a.append("&")
 
     return " ".join(a)
 
-def start_xvnc():
+def start_xvnc(xauthority_path):
     terminate()
-    cmd = xvnc_cmd()
+    cmd = xvnc_cmd(xauthority_path)
     print("Xvnc command line: " + cmd)
     system(cmd)
     wait_for_xvnc()
@@ -94,24 +97,40 @@ def create_password():
     password = str(uuid.uuid4())
     write_password_to_file()
 
+def create_xauthority(configuration_dir):
+    xauthority_path = path.join(configuration_dir, ".Xauthority")
+
+    mcookie = '2b2e28d0316b3cf7cdd9a09d5530ed8a'
+
+    return xauthority_path
+
+# fixme
+# COOKIE=$(/usr/bin/mcookie)
+# rm auth
+# touch auth
+# osboxes@osboxes:~/.vncdesk/2$ echo -e "add localhost:2 . $COOKIE\nadd localhost/unix:2 . $COOKIE\n" | xauth -f auth source -
+# osboxes@osboxes:~/.vncdesk/2$ echo -e "add osboxes:2 . $COOKIE\nadd osboxes/unix:2 . $COOKIE\n" | xauth -f auth source -
+# o
+
 def check_startup(filename):
     if not path.isfile(filename) or not access(filename, X_OK):
         exit_on_error("Cannot find executable startup script")
 
-def startup(filename, arguments, invocation_dir):
-    set_environ(invocation_dir)
+def startup(filename, arguments, invocation_dir, xauthority_path):
+    set_environ(invocation_dir, xauthority_path)
     quoted_arguments = list(map(quote, arguments))
     cmd = filename + " " + " ".join(quoted_arguments)
     system(cmd)
     terminate()
     quit()
 
-def run_startup(arguments, invocation_dir):
+def run_startup(arguments, invocation_dir, xauthority_path):
     filename = "./startup"
     check_startup(filename)
     t1 = threading.Thread(target = startup, args = [filename,
                                                     arguments,
-                                                    invocation_dir])
+                                                    invocation_dir,
+                                                    xauthority_path])
     t1.start()
 
 def configure_xvnc():
@@ -137,8 +156,10 @@ def start(number, arguments):
 
     invocation_dir = getcwd()
     change_to_configuration_dir()
+    configuration_dir = getcwd()
     read_settings()
     create_password()
-    start_xvnc()
+    xauthority_path = create_xauthority(configuration_dir)
+    start_xvnc(xauthority_path)
     configure_xvnc()
-    run_startup(arguments, invocation_dir)
+    run_startup(arguments, invocation_dir, xauthority_path)

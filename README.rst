@@ -88,6 +88,8 @@ Files:
 * ``.password``: Generated every time anew, to password protect the connection
   also from other users on the same system.
 
+* ``.Xauthority``: Generated every time anew.
+
 
 Installation
 ============
@@ -96,11 +98,12 @@ Installation
 
 2. Install dependencies:
 
-   - Python 3
+   - Python_3
 
-   - a compatible VNC server such as TigerVNC_ 1.4 or TightVNC_ 1.3
+   - a compatible VNC server such as TigerVNC_ 1.4, TightVNC_ 1.3, or
+     RealVNC_ 6.0
 
-   - gtk-vnc_ 0.5 or compatible, with the Python GTK+ 3 bindings
+   - gtk-vnc_ 0.5 or compatible, with Python GTK+ 3 bindings
 
 3. If you want to set up an explicit font path for the VNC server, at the same
    level as ``__init__.py`` create ``font_path.py``. Example contents::
@@ -156,6 +159,7 @@ Hocevar. See the COPYING file for more details.
 
 `d3des.py` has been taken from Yusuke Shinyama’s vnc2flv_ version 20100207, then
 was modified for Python 3 compatibility.
+
 
 .. _release: https://github.com/feklee/vncdesk/releases
 .. _TigerVNC: http://tigervnc.org/
