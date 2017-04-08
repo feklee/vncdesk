@@ -73,18 +73,21 @@ def start_xvnc():
     system(cmd)
     wait_for_xvnc()
 
+# see: http://www.geekademy.com/2010/10/creating-hashed-password-for-vnc.html
+def vnc_encode(password):
+    passpadd = (password + '\x00'*8)[:8]
+    strkey = ''.join([ chr(x) for x in d3des.vnckey ])
+    ekey = d3des.deskey(bytearray(strkey, encoding="ascii"), False)
+    return d3des.desfunc(bytearray(passpadd, encoding="ascii"), ekey)
+
 def write_password_to_file():
     global _password_filename
     _password_filename = ".passwd"
-    cmd = ";".join([
-        "rm -f " + _password_filename,
-        "umask 177",
-        "|".join([
-            "echo '" + password + "'",
-            "vncpasswd -f >" + _password_filename
-        ])
-    ])
-    system(cmd)
+    try:
+        password_file = open(_password_filename, "wb")
+        password_file.write(vnc_encode(password))
+    except:
+        exit_on_error("Cannot write to " + _password_filename)
 
 def create_password():
     global password
