@@ -3,7 +3,7 @@
 ##  d3des.py - DES implementation
 ##
 ##  Copyright (c) 2009 by Yusuke Shinyama, with modifications by Felix E. Klee
-##  <felix.klee@inka.de> for Python 3 compatibility (copyright 2017).
+##  <felix.klee@inka.de> for Python 3 compatibility (copyright 2017, WTFPL).
 ##
 
 # This is a Python rewrite of d3des.c by Richard Outerbridge.
