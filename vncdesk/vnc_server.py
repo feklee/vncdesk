@@ -7,6 +7,7 @@ import threading
 from sys import exit
 from shlex import quote
 from .util import exit_on_error, settings, read_settings
+from . import d3des
 
 def set_environ(invocation_dir):
     global _display
