@@ -4,6 +4,7 @@ import signal
 from time import sleep
 import uuid
 import threading
+import subprocess
 from sys import exit
 from shlex import quote
 from .util import exit_on_error, settings, read_settings
@@ -133,11 +134,13 @@ def run_startup(arguments, invocation_dir, xauthority_path):
                                                     xauthority_path])
     t1.start()
 
-def configure_xvnc():
+def configure_xvnc(xauthority_path):
     global _number
-    system("vncconfig -display=:" + str(_number) + " -list >/dev/null 2>&1" +
+    cmd = ("export XAUTHORITY=" + xauthority_path +
+           "; vncconfig -display=:" + str(_number) + " -list >/dev/null 2>&1" +
            " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
            " || echo 'Failure running vncconfig'")
+    subprocess.call(cmd, shell = True)
 
 def change_to_configuration_dir():
     global _number
@@ -161,5 +164,5 @@ def start(number, arguments):
     create_password()
     xauthority_path = create_xauthority(configuration_dir)
     start_xvnc(xauthority_path)
-    configure_xvnc()
+    configure_xvnc(xauthority_path)
     run_startup(arguments, invocation_dir, xauthority_path)
