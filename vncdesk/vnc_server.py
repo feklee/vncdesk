@@ -1,13 +1,16 @@
-from os import path, environ, kill, system, chdir, access, X_OK, getcwd, remove
+from os import path, environ, kill, chdir, access, X_OK, getcwd, urandom
 import string
 import signal
 from time import sleep
 import uuid
 import threading
-import subprocess
 from sys import exit
 from shlex import quote
-from .util import exit_on_error, settings, read_settings
+from .util import exit_on_error, settings, read_settings, log_and_call
+from .util import silently_remove
+import socket
+import subprocess
+import binascii
 from . import d3des
 
 def set_environ(invocation_dir, xauthority_path):
@@ -21,9 +24,9 @@ def set_environ(invocation_dir, xauthority_path):
 
 def remove_lock_file():
     try:
-        remove(_xvnc_lock_filename)
+        silently_remove(_xvnc_lock_filename)
     except:
-        exit("Could not remove lock file " + _xvnc_lock_filename)
+        exit("Cannot remove lock file " + _xvnc_lock_filename)
 
 def terminate():
     global _xvnc_lock_filename
@@ -72,9 +75,7 @@ def xvnc_cmd(xauthority_path):
 
 def start_xvnc(xauthority_path):
     terminate()
-    cmd = xvnc_cmd(xauthority_path)
-    print("Xvnc command line: " + cmd)
-    system(cmd)
+    log_and_call(xvnc_cmd(xauthority_path))
     wait_for_xvnc()
 
 # see: http://www.geekademy.com/2010/10/creating-hashed-password-for-vnc.html
@@ -98,20 +99,28 @@ def create_password():
     password = str(uuid.uuid4())
     write_password_to_file()
 
+def mcookie():
+    return binascii.hexlify(urandom(16)).decode()
+
+def add_cookie(xauthority_path, host, cookie):
+    global _number
+    subprocess.call("xauth -f " + xauthority_path + " add " + host + ":" +
+                    str(_number) + " . " + cookie, shell = True)
+
 def create_xauthority(configuration_dir):
     xauthority_path = path.join(configuration_dir, ".Xauthority")
+    host = socket.gethostname()
+    cookie = mcookie()
 
-    mcookie = '2b2e28d0316b3cf7cdd9a09d5530ed8a'
+    try:
+        silently_remove(xauthority_path)
+    except:
+        exit_on_error("Cannot remove " + xauthority_path)
+
+    add_cookie(xauthority_path, host, cookie)
+    add_cookie(xauthority_path, host + "/unix", cookie)
 
     return xauthority_path
-
-# fixme
-# COOKIE=$(/usr/bin/mcookie)
-# rm auth
-# touch auth
-# osboxes@osboxes:~/.vncdesk/2$ echo -e "add localhost:2 . $COOKIE\nadd localhost/unix:2 . $COOKIE\n" | xauth -f auth source -
-# osboxes@osboxes:~/.vncdesk/2$ echo -e "add osboxes:2 . $COOKIE\nadd osboxes/unix:2 . $COOKIE\n" | xauth -f auth source -
-# o
 
 def check_startup(filename):
     if not path.isfile(filename) or not access(filename, X_OK):
@@ -120,8 +129,7 @@ def check_startup(filename):
 def startup(filename, arguments, invocation_dir, xauthority_path):
     set_environ(invocation_dir, xauthority_path)
     quoted_arguments = list(map(quote, arguments))
-    cmd = filename + " " + " ".join(quoted_arguments)
-    system(cmd)
+    log_and_call(filename + " " + " ".join(quoted_arguments))
     terminate()
     quit()
 
@@ -136,11 +144,11 @@ def run_startup(arguments, invocation_dir, xauthority_path):
 
 def configure_xvnc(xauthority_path):
     global _number
-    cmd = ("export XAUTHORITY=" + xauthority_path +
-           "; vncconfig -display=:" + str(_number) + " -list >/dev/null 2>&1" +
-           " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
-           " || echo 'Failure running vncconfig'")
-    subprocess.call(cmd, shell = True)
+    log_and_call("export XAUTHORITY=" + xauthority_path +
+                 "; vncconfig -display=:" + str(_number) +
+                 " -list >/dev/null 2>&1" +
+                 " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
+                 " || echo 'Failure running vncconfig'")
 
 def change_to_configuration_dir():
     global _number

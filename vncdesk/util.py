@@ -1,6 +1,9 @@
+from os import remove
 from sys import exit, stderr
 import configparser
 from copy import deepcopy
+import subprocess
+import errno
 
 settings = {}
 
@@ -51,3 +54,15 @@ def read_settings():
         )
     except Exception as e:
         exit_on_error("Cannot read settings: " + str(e))
+
+def log_and_call(cmd):
+    print('Calling: ' + cmd)
+    subprocess.call(cmd, shell = True)
+
+# Based on: http://stackoverflow.com/revisions/10840586/7
+def silently_remove(filename):
+    try:
+        remove(filename)
+    except OSError as e:
+        if e.errno != errno.ENOENT:
+            raise
