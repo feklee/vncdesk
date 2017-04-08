@@ -63,7 +63,6 @@ def xvnc_cmd(xauthority_path):
          "-rfbauth " + _password_filename,
          "-rfbport " + str(port),
          "-depth " + depth,
-         "-sp .", # dummy Xserver option to avoid RealVNC error message
          "-pn",
          "-localhost",
          "-auth " + xauthority_path]
