@@ -1,4 +1,4 @@
-from os import remove
+from os import remove, utime
 from sys import exit, stderr
 import configparser
 from copy import deepcopy
@@ -66,3 +66,10 @@ def silently_remove(filename):
     except OSError as e:
         if e.errno != errno.ENOENT:
             raise
+
+# See: http://stackoverflow.com/revisions/6222692/2
+def touch(path):
+    try:
+        utime(path, None)
+    except OSError:
+        open(path, 'a').close()

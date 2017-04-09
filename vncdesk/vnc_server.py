@@ -7,7 +7,7 @@ import threading
 from sys import exit
 from shlex import quote
 from .util import exit_on_error, settings, read_settings, log_and_call
-from .util import silently_remove
+from .util import silently_remove, touch
 import socket
 import subprocess
 import binascii
@@ -113,8 +113,9 @@ def create_xauthority(configuration_dir):
 
     try:
         silently_remove(xauthority_path)
+        touch(xauthority_path)
     except:
-        exit_on_error("Cannot remove " + xauthority_path)
+        exit_on_error("Cannot recreate " + xauthority_path)
 
     add_cookie(xauthority_path, host, cookie)
     add_cookie(xauthority_path, host + "/unix", cookie)
