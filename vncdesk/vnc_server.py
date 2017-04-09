@@ -144,11 +144,8 @@ def run_startup(arguments, invocation_dir, xauthority_path):
 
 def configure_xvnc(xauthority_path):
     global _number
-    log_and_call("export XAUTHORITY=" + xauthority_path +
-                 "; vncconfig -display=:" + str(_number) +
-                 " -list >/dev/null 2>&1" +
-                 " && (vncconfig -nowin -display=:" + str(_number) + " &)" +
-                 " || echo 'Failure running vncconfig'")
+    log_and_call("XAUTHORITY=" + xauthority_path + " " +
+                 "vncconfig -nowin -display=:" + str(_number) + " &")
 
 def change_to_configuration_dir():
     global _number
