@@ -170,3 +170,4 @@ was modified for Python 3 compatibility.
 .. _Fluxbox: https://en.wikipedia.org/wiki/Fluxbox
 .. _pip: https://en.wikipedia.org/wiki/Pip_(package_manager)
 .. _vnc2flv: http://pydoc.net/Python/vnc2flv/20100207/vnc2flv.d3des/
+.. _RealVNC: https://en.wikipedia.org/wiki/RealVNC
