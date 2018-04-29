@@ -103,7 +103,10 @@ Installation
    - a compatible VNC server such as TigerVNC_ 1.4, TightVNC_ 1.3, or
      RealVNC_ 4.1
 
-   - gtk-vnc_ 0.5 or compatible, with Python GTK+ 3 bindings
+   - gtk-vnc_ 0.5 or compatible
+
+   - GObject introspection data for gtk-vnc (if not already installed as part of
+     gtk-vnc)
 
 3. If you want to set up an explicit font path for the VNC server, at the same
    level as ``__init__.py`` create ``font_path.py``. Example contents::
